@@ -1,20 +1,24 @@
 import { StatusBar } from "expo-status-bar";
 import { Image, StyleSheet, Text, View } from "react-native";
-
+import OptionCard from "./components/OptionCard";
+import question from "./assets/data/oneQuestionWithOption";
+import { useState } from "react";
 export default function App() {
+  const [selected, setSelected] = useState(null);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Which of these is "the glass" ?</Text>
+      <Text style={styles.text}>{question.question}</Text>
       <View style={styles.optionContainer}>
-        <View style={styles.optionsUsers}>
-          <Image
-            style={styles.image}
-            source={{
-              uri: "https://fsmd-assets.s3.eu-west-1.amazonaws.com/duolingo/images/cup.png",
-            }}
+        {question.options.map((option) => (
+          <OptionCard
+            key={option.id}
+            name={option.text}
+            image={option.image}
+            isSelected={selected === option.id}
+            onPress={() => setSelected(option.id)}
           />
-          <Text style={styles.textOptions}>La taza</Text>
-        </View>
+        ))}
       </View>
     </View>
   );
@@ -30,28 +34,13 @@ const styles = StyleSheet.create({
     padding: 6,
   },
   text: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
     color: "#2c2c2c",
     alignSelf: "stretch",
-    marginBottom: 40,
+    marginBottom: 10,
   },
-  image: {
-    width: "100%",
-    flex: 1,
-    resizeMode: "contain",
-  },
-  optionsUsers: {
-    width: "48%",
-    height: "48%",
-    borderRadius: 12,
-    borderWidth: 2,
-    borderBottomWidth: 6,
-    borderColor: "grey",
-    alignItems: "center",
-    padding: 10,
-    justifyContent: "flex-start",
-  },
+
   optionContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -59,9 +48,5 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignContent: "space-between",
     width: "100%",
-  },
-  textOptions: {
-    fontSize: 18,
-    fontWeight: "bold",
   },
 });
