@@ -20,7 +20,7 @@ const OptionCard = ({ name, image, isSelected, onPress }) => {
     </Pressable>
   );
 };
-OptionCard.PropTypes = {
+OptionCard.propTypes = {
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   onPress: PropTypes.func,
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
   selectedConatiner: {
     backgroundColor: "#ddf3fe",
     borderColor: "#81d4fe6c",
+    borderBottomColor: "#368ab4d5",
   },
   selectedText: {
     color: "#212121",

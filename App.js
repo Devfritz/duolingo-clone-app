@@ -1,25 +1,49 @@
 import { StatusBar } from "expo-status-bar";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Alert, Button, Image, StyleSheet, Text, View } from "react-native";
 import OptionCard from "./components/OptionCard";
-import question from "./assets/data/oneQuestionWithOption";
-import { useState } from "react";
+import question from "./assets/data/imageMulatipleChoiceQuestions";
+import { useEffect, useState } from "react";
+import ButtonCheck from "./components/Button";
 export default function App() {
   const [selected, setSelected] = useState(null);
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const [currentQuestion, seCurrentQuestion] = useState(
+    question[questionIndex]
+  );
+
+  useEffect(() => {
+    console.log(currentQuestion);
+    if (questionIndex >= question.length) {
+      Alert.alert("Win WIN WIN");
+      setQuestionIndex(0);
+    } else {
+      seCurrentQuestion(question[questionIndex]);
+    }
+  }, [questionIndex]);
+
+  const checkAnswer = () => {
+    if (selected.correct) {
+      setQuestionIndex(questionIndex + 1);
+    } else {
+      Alert.alert("Not correct");
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{question.question}</Text>
+      <Text style={styles.text}>{currentQuestion.question}</Text>
       <View style={styles.optionContainer}>
-        {question.options.map((option) => (
+        {currentQuestion.options.map((option) => (
           <OptionCard
             key={option.id}
             name={option.text}
             image={option.image}
-            isSelected={selected === option.id}
-            onPress={() => setSelected(option.id)}
+            onPress={() => setSelected(option)}
+            isSelected={selected?.id === option.id}
           />
         ))}
       </View>
+      <ButtonCheck onPress={() => checkAnswer()} />
     </View>
   );
 }
