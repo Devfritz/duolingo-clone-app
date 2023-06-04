@@ -1,13 +1,16 @@
 import { StatusBar } from "expo-status-bar";
 import { Alert, Button, Image, StyleSheet, Text, View } from "react-native";
 import OptionCard from "./components/OptionCard";
-import question from "./assets/data/imageMulatipleChoiceQuestions";
+// import question from "./assets/data/imageMultipleChoiceQuestions";
+import question from "./assets/data/allQuestions";
 import { useEffect, useState } from "react";
 import ButtonCheck from "./components/Button";
 import ImageMultipleChoiceQuestion from "./components/imageMultipleChoiceQuestion/ImageMultipleChoiceQuestion";
+import SectionAllQuestion from "./components/sectionAllQueestion/SectionAllQuestion";
+import OpenEndedQuestion from "./components/openEndedQuestion/OpenEndedQuestion";
 export default function App() {
   const [selected, setSelected] = useState(null);
-  const [questionIndex, setQuestionIndex] = useState(0);
+  const [questionIndex, setQuestionIndex] = useState(1);
   const [currentQuestion, setCurrentQuestion] = useState(
     question[questionIndex]
   );
@@ -20,25 +23,39 @@ export default function App() {
       setCurrentQuestion(question[questionIndex]);
     }
   };
+  useEffect(() => {
+    winAlert();
+  }, [questionIndex]);
 
   const checkAnswer = () => {
-    if (selected.correct) {
-      setQuestionIndex(questionIndex + 1);
-    }
+    // if (selected.correct) {
+    setQuestionIndex(questionIndex + 1);
+    // }
   };
 
   return (
     <View style={styles.container}>
-      <ImageMultipleChoiceQuestion
-        selected={selected}
-        setSelected={setSelected}
-        currentQuestion={currentQuestion}
-        setCurrentQuestion={setCurrentQuestion}
-        questionIndex={questionIndex}
-        setQuestionIndex={setQuestionIndex}
-        checkAnswer={checkAnswer}
-        winAlert={winAlert}
-      />
+      {currentQuestion.type === "IMAGE_MULTIPLE_CHOICE" && (
+        <ImageMultipleChoiceQuestion
+          selected={selected}
+          setSelected={setSelected}
+          currentQuestion={currentQuestion}
+          setCurrentQuestion={setCurrentQuestion}
+          questionIndex={questionIndex}
+          setQuestionIndex={setQuestionIndex}
+          checkAnswer={checkAnswer}
+          winAlert={winAlert}
+        />
+      )}
+
+      {currentQuestion.type === "OPEN_ENDED" && (
+        <OpenEndedQuestion
+          currentQuestion={currentQuestion}
+          checkAnswer={checkAnswer}
+        />
+      )}
+
+      {/* <SectionAllQuestion /> */}
     </View>
   );
 }

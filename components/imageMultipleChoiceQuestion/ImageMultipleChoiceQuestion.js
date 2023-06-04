@@ -7,13 +7,8 @@ const ImageMultipleChoiceQuestion = ({
   selected,
   setSelected,
   currentQuestion,
-  questionIndex,
   checkAnswer,
-  winAlert,
 }) => {
-  useEffect(() => {
-    winAlert();
-  }, [questionIndex]);
   return (
     <>
       <Text style={styles.text}>{currentQuestion.question}</Text>

@@ -6,13 +6,13 @@ export default [
     answer: "I am a man",
   },
   {
-    id: "q5",
+    id: "q6",
     type: "OPEN_ENDED",
     text: "La mujer",
     answer: "the woman",
   },
   {
-    id: "q5",
+    id: "q7",
     type: "OPEN_ENDED",
     text: "Me gusta React Native",
     answer: "I like react native",
