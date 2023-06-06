@@ -1,9 +1,18 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import React from "react";
 
-const ButtonCheck = ({ onPress }) => {
+const ButtonCheck = ({ onPress, disabled }) => {
   return (
-    <Pressable style={styles.buttonContainer} onPress={onPress}>
+    <Pressable
+      style={[
+        styles.buttonContainer,
+        disabled
+          ? { backgroundColor: "#c9c9c9" }
+          : { backgroundColor: "#77c801" },
+      ]}
+      onPress={onPress}
+      disabled={disabled}
+    >
       <Text style={styles.textButton}>check</Text>
     </Pressable>
   );
@@ -11,7 +20,6 @@ const ButtonCheck = ({ onPress }) => {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    backgroundColor: "#77c801",
     alignSelf: "stretch",
     padding: 10,
     borderRadius: 15,

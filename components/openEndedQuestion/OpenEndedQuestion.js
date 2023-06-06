@@ -11,15 +11,19 @@ const OpenEndedQuestion = ({ currentQuestion, onCorrect, onWrong }) => {
   };
 
   const checkAnswer = () => {
-    if (
-      answerInput.toLowerCase().trim() ===
-      currentQuestion.answer.toLowerCase().trim()
-    ) {
-      onCorrect();
+    if (answerInput) {
+      if (
+        answerInput.toLowerCase().trim() ===
+        currentQuestion.answer.toLowerCase().trim()
+      ) {
+        onCorrect();
+      } else {
+        onWrong();
+      }
+      setAnswerInput("");
     } else {
-      onWrong();
+      return;
     }
-    setAnswerInput("");
   };
   return (
     <>
@@ -48,7 +52,10 @@ const OpenEndedQuestion = ({ currentQuestion, onCorrect, onWrong }) => {
           textAlignVertical="top"
         />
       </View>
-      <ButtonCheck onPress={() => checkAnswer()} />
+      <ButtonCheck
+        onPress={() => checkAnswer()}
+        disabled={answerInput ? false : true}
+      />
     </>
   );
 };

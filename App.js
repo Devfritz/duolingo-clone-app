@@ -1,14 +1,10 @@
-import { StatusBar } from "expo-status-bar";
-import { Alert, Button, Image, StyleSheet, Text, View } from "react-native";
-import OptionCard from "./components/OptionCard";
-// import question from "./assets/data/imageMultipleChoiceQuestions";
+import { Alert, StyleSheet, View } from "react-native";
 import question from "./assets/data/allQuestions";
 import { useEffect, useState } from "react";
-import ButtonCheck from "./components/Button";
 import ImageMultipleChoiceQuestion from "./components/imageMultipleChoiceQuestion/ImageMultipleChoiceQuestion";
-import SectionAllQuestion from "./components/sectionAllQuestion/SectionAllQuestion";
 import OpenEndedQuestion from "./components/openEndedQuestion/OpenEndedQuestion";
 import Progress from "./components/progress/Progress";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function App() {
   const [selected, setSelected] = useState(null);
   const [questionIndex, setQuestionIndex] = useState(0);
@@ -26,6 +22,30 @@ export default function App() {
       setCurrentQuestion(question[questionIndex]);
     }
   };
+
+  const loadData = async () => {
+    const getLives = await AsyncStorage.getItem("lives");
+    const getQuestionIndex = await AsyncStorage.getItem("questionIndex");
+    if (getLives) {
+      setLives(Number(getLives));
+    }
+    if (getQuestionIndex) {
+      setQuestionIndex(Number(getQuestionIndex));
+    }
+  };
+
+  const saveData = async () => {
+    await AsyncStorage.setItem("lives", lives.toString());
+    await AsyncStorage.setItem("questionIndex", questionIndex.toString());
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  useEffect(() => {
+    saveData();
+  }, [lives, questionIndex]);
   useEffect(() => {
     winAlert();
   }, [questionIndex]);
