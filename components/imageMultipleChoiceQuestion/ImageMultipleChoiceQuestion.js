@@ -7,8 +7,16 @@ const ImageMultipleChoiceQuestion = ({
   selected,
   setSelected,
   currentQuestion,
-  checkAnswer,
+  onCorrect,
+  onWrong,
 }) => {
+  const checkAnswer = () => {
+    if (selected.correct) {
+      onCorrect();
+    } else {
+      onWrong();
+    }
+  };
   return (
     <>
       <Text style={styles.text}>{currentQuestion.question}</Text>

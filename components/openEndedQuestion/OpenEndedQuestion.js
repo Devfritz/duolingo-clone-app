@@ -3,19 +3,21 @@ import mascot from "../../assets/images/mascot.png";
 import ButtonCheck from "../Button";
 import { useState } from "react";
 
-const OpenEndedQuestion = ({ currentQuestion, checkAnswer }) => {
+const OpenEndedQuestion = ({ currentQuestion, onCorrect, onWrong }) => {
   const [answerInput, setAnswerInput] = useState(null);
 
   const handleChangeText = (text) => {
     setAnswerInput(text);
   };
 
-  const CheckAnswer = () => {
+  const checkAnswer = () => {
     if (
       answerInput.toLowerCase().trim() ===
       currentQuestion.answer.toLowerCase().trim()
     ) {
-      checkAnswer();
+      onCorrect();
+    } else {
+      onWrong();
     }
     setAnswerInput("");
   };
@@ -46,7 +48,7 @@ const OpenEndedQuestion = ({ currentQuestion, checkAnswer }) => {
           textAlignVertical="top"
         />
       </View>
-      <ButtonCheck onPress={() => CheckAnswer()} />
+      <ButtonCheck onPress={() => checkAnswer()} />
     </>
   );
 };
